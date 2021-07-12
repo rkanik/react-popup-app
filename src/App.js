@@ -34,12 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
 	const classes = useStyles();
 	const [beginn, setBeginn] = React.useState({
-		date: new Date(),
-		time: "",
+		date: new Date(), time: null,
 	});
 	const [ende, setEnde] = React.useState({
-		date: null,
-		time: "",
+		date: new Date(), time: null
 	});
 	const [open, setOpen] = React.useState(false);
 
@@ -51,11 +49,10 @@ const App = () => {
 	};
 
 	const onClickHinzufugen = () => {
-		console.log(
-			moment(beginn.date + " " + beginn.time).format("YYYY/MM/DD hh:mm")
-		);
-		console.log(moment(ende.date + " " + ende.time).format("YYYY/MM/DD hh:mm"));
-		 handleClose() ;
+		console.clear()
+		console.log((moment(beginn.date).format("YYYY/MM/DD") + " " + (beginn.time || '')).trim());
+		console.log((moment(ende.date).format("YYYY/MM/DD") + " " + (ende.time || '')).trim());
+		handleClose();
 	};
 
 	return (
@@ -133,11 +130,8 @@ const App = () => {
 													label="Datum"
 													value={beginn.date}
 													format="yyyy/dd/MM"
-													onChange={(e) =>
-														setBeginn((state) => ({
-															...state,
-															date: e,
-														}))
+													onChange={date =>
+														setBeginn((state) => ({ ...state, date }))
 													}
 													InputAdornmentProps={{ position: "start" }}
 												/>
@@ -175,11 +169,8 @@ const App = () => {
 													label="Uhrzeit"
 													format="yyyy/dd/MM"
 													value={ende.date}
-													onChange={(e) =>
-														setEnde((state) => ({
-															...state,
-															date: e,
-														}))
+													onChange={date =>
+														setEnde((state) => ({ ...state, date }))
 													}
 													InputAdornmentProps={{ position: "start" }}
 												/>
