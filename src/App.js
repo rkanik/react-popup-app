@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
 	const classes = useStyles();
+	const [title, setTitle] = React.useState('');
 	const [beginn, setBeginn] = React.useState({
 		date: new Date(), time: '',
 	});
@@ -49,6 +50,7 @@ const App = () => {
 	};
 
 	const onClickHinzufugen = () => {
+		console.log('Titel ::', title);
 		console.log('Beginn ::', moment((moment(beginn.date).format("YYYY-MM-DD") + " " + (beginn.time || '')).trim()).format('YYYY-MM-DD HH:mm'));
 		console.log('Ende ::', moment((moment(ende.date).format("YYYY-MM-DD") + " " + (ende.time || '')).trim()).format('YYYY-MM-DD HH:mm'));
 		handleClose();
@@ -119,6 +121,8 @@ const App = () => {
 												<TextField
 													size="small"
 													variant="outlined"
+													value={title}
+													onChange={e => setTitle(e.target.value)}
 													style={{ width: "100%", marginTop: "0.5rem" }}
 												/>
 											</Grid>
