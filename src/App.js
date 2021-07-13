@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
 	const classes = useStyles();
 	const [beginn, setBeginn] = React.useState({
-		date: new Date(), time: null,
+		date: new Date(), time: '',
 	});
 	const [ende, setEnde] = React.useState({
-		date: new Date(), time: null
+		date: new Date(), time: ''
 	});
 	const [open, setOpen] = React.useState(false);
 
@@ -49,11 +49,16 @@ const App = () => {
 	};
 
 	const onClickHinzufugen = () => {
-		console.clear()
-		console.log((moment(beginn.date).format("YYYY/MM/DD") + " " + (beginn.time || '')).trim());
-		console.log((moment(ende.date).format("YYYY/MM/DD") + " " + (ende.time || '')).trim());
+		console.log('Beginn ::', moment((moment(beginn.date).format("YYYY-MM-DD") + " " + (beginn.time || '')).trim()).format('YYYY-MM-DD HH:mm'));
+		console.log('Ende ::', moment((moment(ende.date).format("YYYY-MM-DD") + " " + (ende.time || '')).trim()).format('YYYY-MM-DD HH:mm'));
 		handleClose();
 	};
+
+	const handleChangeBeginnDate = date => {
+		setBeginn((state) => ({ ...state, date }))
+		if (date > ende.date) setEnde(s => ({ ...s, date }))
+
+	}
 
 	return (
 		<div className="App">
@@ -113,9 +118,8 @@ const App = () => {
 												<span>Titel:</span> <br />
 												<TextField
 													size="small"
-													style={{ width: "100%", marginTop: "0.5rem" }}
 													variant="outlined"
-													label="Search"
+													style={{ width: "100%", marginTop: "0.5rem" }}
 												/>
 											</Grid>
 											<Grid style={{ margin: "auto" }} item xs={4}>
@@ -129,17 +133,15 @@ const App = () => {
 													inputVariant="outlined"
 													label="Datum"
 													value={beginn.date}
-													format="yyyy/dd/MM"
-													onChange={date =>
-														setBeginn((state) => ({ ...state, date }))
-													}
+													format="yyyy/MM/dd"
+													onChange={handleChangeBeginnDate}
 													InputAdornmentProps={{ position: "start" }}
 												/>
 											</Grid>
 											<Grid item xs={4}>
 												<TextField
 													type="time"
-													label="Time"
+													label="Datum"
 													size="small"
 													variant="outlined"
 													value={beginn.time}
@@ -167,7 +169,7 @@ const App = () => {
 													size="small"
 													inputVariant="outlined"
 													label="Uhrzeit"
-													format="yyyy/dd/MM"
+													format="yyyy/MM/dd"
 													value={ende.date}
 													onChange={date =>
 														setEnde((state) => ({ ...state, date }))
@@ -178,8 +180,8 @@ const App = () => {
 											<Grid item xs={4}>
 												<TextField
 													variant="outlined"
-													label="Time"
-													placeholder="Time"
+													label="Uhrzeit"
+													placeholder="Uhrzeit"
 													size="small"
 													type="time"
 													value={ende.time}
